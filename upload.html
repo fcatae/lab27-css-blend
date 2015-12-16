@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>File Upload</title>
+</head>
+<body>
+	<input id="btn" type="file">
+	
+	<div class="clip">
+		<img id="img" class="img-fill">
+	</div>
+	
+	<style>
+		.clip {
+			width: 450px;
+			height: 450px;
+			overflow: hidden;
+			border: 1px solid black;			
+		}
+		.img-fill {			
+			max-height: 100%;
+			--min-width: 200px;
+			
+			--display: block;
+			
+			position: relative;
+			
+			top: 50%;
+			left: 50%;
+			transform: translate( -50%, -50% );
+		}
+	</style>
+	
+	<script>
+		btn.addEventListener("change", function() {
+			img.src = URL.createObjectURL(btn.files[0]); 
+		});
+	</script>
+</body>
+</html>
