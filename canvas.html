@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas</title>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="640"></canvas>
+	<img id="dest" src="" alt="">
+	
+	<script>
+		var ctx = canvas.getContext('2d');
+		
+		alert(navigator.userAgent);
+		
+		var pendingImages = 0;
+		var callback;
+		
+		var img = loadImage('fab.jpg');
+		//var imgSaber = loadImage('sw-light-blend2.png');
+		var imgSaber = loadImage('sw-light-alpha.png');
+		var imgHands = loadImage('sw-hands.png');
+		
+		callback = function(a) { 
+			ctx.drawImage(img, 0, 0);
+
+			ctx.fillStyle = 'rgba(10,10,250,.2)'
+			ctx.fillRect(0, 0, img.width, img.height);	
+			
+			alert(ctx.globalCompositeOperation);
+			
+			ctx.globalCompositeOperation = 'screen';
+			ctx.drawImage(imgSaber, 0, 0);
+			
+			ctx.globalCompositeOperation = 'source-over';
+			ctx.drawImage(imgHands, 0, 0);
+			
+			dest.src = canvas.toDataURL("image/png");
+		 };
+
+		// img.onload = function() { 
+		// 	ctx.drawImage(img, 0, 0);	
+		// }		
+		
+		function loadImage(name) {
+			var image = new Image();
+			
+			pendingImages++;
+
+			image.onload = function() { 
+				pendingImages--; 
+				
+				if( pendingImages == 0 ) {
+					callback && callback(name);
+				}
+			};								
+		
+			image.src = name;
+						
+			return image;			
+		}
+		
+		
+		
+	</script>
+</body>
+</html>
